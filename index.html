@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>냠냠 맛집노트</title>
+  <meta name="description" content="내가 다녀온 맛집을 기록하고 링크 하나로 공유하는 맛집 노트">
+  <meta name="theme-color" content="#ff6b35">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="냠냠">
+  <meta property="og:title" content="냠냠 맛집노트">
+  <meta property="og:description" content="내가 다녀온 맛집을 기록하고 링크 하나로 공유해요">
+  <meta property="og:image" content="https://eat.itfree.app/icons/icon-512.png">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="src/styles.css">
+  <script defer src="vendor/leaflet/leaflet.js"></script>
+  <script type="module" src="src/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="#/" class="brand">🍽️ 냠냠</a>
+    <div id="topbar-actions"></div>
+  </header>
+  <main id="view" tabindex="-1"></main>
+  <nav class="tabbar" aria-label="메인 메뉴">
+    <a href="#/" data-tab="list"><span>📋</span>목록</a>
+    <a href="#/map" data-tab="map"><span>🗺️</span>지도</a>
+    <a href="#/new" data-tab="new" class="tab-add"><span>＋</span>추가</a>
+    <a href="#/settings" data-tab="settings"><span>⚙️</span>설정</a>
+  </nav>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

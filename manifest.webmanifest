@@ -1,0 +1,16 @@
+{
+  "name": "냠냠 맛집노트",
+  "short_name": "냠냠",
+  "description": "내가 다녀온 맛집을 기록하고 링크 하나로 공유해요",
+  "lang": "ko",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff8f3",
+  "theme_color": "#ff6b35",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
