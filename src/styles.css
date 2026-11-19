@@ -135,3 +135,8 @@ select { width: auto; margin: 0; }
   transition: .2s; max-width: 90vw; text-align: center; }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
 [hidden] { display: none !important; }
+
+.modal-back { position: fixed; inset: 0; z-index: 3000; background: rgba(0,0,0,.45); display: grid; place-items: center; padding: 20px; }
+.modal { width: 100%; max-width: 380px; background: var(--card); border-radius: 18px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,.3); }
+.modal p { margin: .4rem 0 .8rem; }
+.modal .btn.danger { background: var(--danger); color: #fff; border-color: var(--danger); }

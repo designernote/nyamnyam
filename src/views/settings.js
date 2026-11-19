@@ -1,6 +1,6 @@
 import { listPlaces, bulkSave, clearPlaces } from '../db.js';
 import { blobToDataURL, dataURLToBlob } from '../image.js';
-import { toast, today } from '../util.js';
+import { toast, today, ask } from '../util.js';
 import { installPrompt, promptInstall } from '../app.js';
 
 export async function settingsView(el) {
@@ -74,8 +74,7 @@ export async function settingsView(el) {
   });
 
   el.querySelector('#wipe').addEventListener('click', async () => {
-    if (!confirm('모든 맛집 기록과 사진이 삭제돼요. 계속할까요?')) return;
-    if (!confirm('정말 삭제할까요? 되돌릴 수 없어요.')) return;
+    if (!(await ask({ title: '모든 기록을 삭제할까요?', message: '모든 맛집 기록과 사진이 삭제되고 되돌릴 수 없어요.', ok: '모두 삭제', danger: true }))) return;
     await clearPlaces();
     toast('모두 삭제했어요');
     settingsView(el);

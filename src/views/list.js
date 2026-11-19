@@ -1,6 +1,6 @@
 import { listPlaces } from '../db.js';
 import { CATEGORIES, catOf } from '../constants.js';
-import { esc, stars, fmtDate, blobUrl, setActions, toast } from '../util.js';
+import { esc, stars, fmtDate, blobUrl, setActions, toast, ask } from '../util.js';
 import { shareLink } from '../share.js';
 
 const state = { q: '', cat: '', sort: 'recent', minRating: 0 };
@@ -100,7 +100,7 @@ export async function listView(el) {
   document.getElementById('share-list').addEventListener('click', async () => {
     const items = filtered(all);
     if (!items.length) return toast('공유할 맛집이 없어요');
-    const title = prompt('공유할 목록 이름', state.cat ? `내 ${catOf(state.cat).label} 맛집` : '내 맛집 리스트');
+    const title = await ask({ title: `${items.length}곳 공유하기`, message: '목록 이름을 정해 주세요 (사진은 공유되지 않아요)', input: state.cat ? `내 ${catOf(state.cat).label} 맛집` : '내 맛집 리스트', ok: '공유' });
     if (title === null) return;
     const r = await shareLink(title || '내 맛집 리스트', items);
     if (r === 'copied') toast(`링크를 복사했어요 (${items.length}곳, 사진 제외)`);

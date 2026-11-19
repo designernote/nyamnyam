@@ -38,14 +38,26 @@ export async function decodeShare(code) {
   return { title: String(data.t || '공유된 맛집'), places: (data.i || []).map(unpack) };
 }
 
+import { ask } from './util.js';
+
+// 미리보기(샌드박스) 환경에서는 실제 서비스 주소로 링크를 만듭니다.
+const PUBLIC_BASE = 'https://eat.itfree.app/';
+const baseUrl = () => (/^https?:$/.test(location.protocol) && !/claude|anthropic|usercontent/.test(location.hostname)
+  ? `${location.origin}${location.pathname}` : PUBLIC_BASE);
+
 export async function shareLink(title, places) {
   const code = await encodeShare(title, places);
-  const url = `${location.origin}${location.pathname}#/s/${code}`;
+  const url = `${baseUrl()}#/s/${code}`;
   const text = places.length === 1 ? `🍽️ ${places[0].name} 추천해요!` : `🍽️ ${title} (${places.length}곳)`;
   if (navigator.share) {
     try { await navigator.share({ title, text, url }); return 'shared'; }
     catch (e) { if (e.name === 'AbortError') return 'cancel'; }
   }
-  await navigator.clipboard.writeText(url);
-  return 'copied';
+  try {
+    await navigator.clipboard.writeText(url);
+    return 'copied';
+  } catch {
+    await ask({ title: '공유 링크', message: '아래 링크를 복사해서 보내 주세요', input: url, readonly: true, ok: '닫기', cancel: '' });
+    return 'shown';
+  }
 }

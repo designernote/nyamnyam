@@ -1,6 +1,6 @@
 import { getPlace, deletePlace } from '../db.js';
 import { catOf } from '../constants.js';
-import { esc, stars, fmtDate, blobUrl, safeUrl, toast, setActions } from '../util.js';
+import { esc, stars, fmtDate, blobUrl, safeUrl, toast, setActions, ask } from '../util.js';
 import { createMap, pinIcon, hasCoords, kakaoMapUrl, naverMapUrl } from '../mapkit.js';
 import { shareLink } from '../share.js';
 import { go } from '../router.js';
@@ -55,7 +55,7 @@ export async function detailView(el, { id }) {
     if (r === 'copied') toast('링크를 복사했어요 (사진 제외)');
   });
   el.querySelector('#del').addEventListener('click', async () => {
-    if (!confirm(`'${p.name}'을(를) 삭제할까요?`)) return;
+    if (!(await ask({ title: `'${p.name}'을(를) 삭제할까요?`, message: '사진과 메모도 함께 삭제돼요.', ok: '삭제', danger: true }))) return;
     await deletePlace(p.id);
     toast('삭제했어요');
     go('/');

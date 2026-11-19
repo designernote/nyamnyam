@@ -1,5 +1,5 @@
 // 앱 파일 수정 후 배포할 때 VERSION을 올려야 사용자에게 새 버전이 적용됩니다.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL = `shell-${VERSION}`;
 const TILES = 'tiles';
 const MAX_TILES = 400;
