@@ -1,5 +1,5 @@
 // 앱 파일 수정 후 배포할 때 VERSION을 올려야 사용자에게 새 버전이 적용됩니다.
-const VERSION = 'v2';
+const VERSION = 'v3';
 const SHELL = `shell-${VERSION}`;
 const TILES = 'tiles';
 const MAX_TILES = 400;
@@ -9,7 +9,7 @@ const SHELL_FILES = [
   'src/styles.css', 'src/app.js', 'src/router.js', 'src/db.js', 'src/share.js',
   'src/image.js', 'src/util.js', 'src/constants.js', 'src/mapkit.js',
   'src/views/list.js', 'src/views/map.js', 'src/views/form.js', 'src/views/detail.js',
-  'src/views/shared.js', 'src/views/settings.js',
+  'src/views/shared.js', 'src/views/settings.js', 'src/views/explore.js', 'src/data/famous.js',
   'vendor/leaflet/leaflet.js', 'vendor/leaflet/leaflet.css',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
 ];

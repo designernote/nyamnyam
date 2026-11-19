@@ -9,7 +9,10 @@ export function createMap(el, { center = DEFAULT_CENTER, zoom = 13 } = {}) {
   }).addTo(map);
   // 컨테이너 크기가 렌더 후 확정되는 경우 대비
   const t = setTimeout(() => map.invalidateSize(), 50);
-  onCleanup(() => { clearTimeout(t); map.stop(); map.off(); map.eachLayer((l) => l.off()); map.remove(); });
+  onCleanup(() => {
+    clearTimeout(t); map.stop();
+    map._animatingZoom = false; // 줌 애니메이션 중 화면 전환 시 Leaflet 타이머 오류 방지
+    map.off(); map.eachLayer((l) => l.off()); map.remove(); });
   return map;
 }
 
@@ -44,7 +47,7 @@ export async function searchAddress(q) {
   return (await res.json()).map((r) => ({ label: r.display_name, lat: +r.lat, lng: +r.lon }));
 }
 
-export const kakaoMapUrl = (p) => hasCoords(p)
+export const kakaoMapUrl = (p) => hasCoords(p) && !p.approx
   ? `https://map.kakao.com/link/map/${encodeURIComponent(p.name)},${p.lat},${p.lng}`
   : `https://map.kakao.com/link/search/${encodeURIComponent(p.name)}`;
 export const naverMapUrl = (p) => `https://map.naver.com/p/search/${encodeURIComponent(p.address || p.name)}`;

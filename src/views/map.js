@@ -3,12 +3,12 @@ import { catOf } from '../constants.js';
 import { esc, stars, toast } from '../util.js';
 import { createMap, pinIcon, hasCoords, getCurrentPosition } from '../mapkit.js';
 
-export function addMarkers(map, places, hrefOf) {
+export function addMarkers(target, places, hrefOf, map = target) {
   const pts = [];
   for (const p of places.filter(hasCoords)) {
     pts.push([p.lat, p.lng]);
-    L.marker([p.lat, p.lng], { icon: pinIcon(p.category) }).addTo(map).bindPopup(
-      `<a class="popup" href="${hrefOf(p)}"><b>${esc(p.name)}</b><br><span class="stars">${stars(p.rating)}</span> ${esc(catOf(p.category).label)}</a>`);
+    L.marker([p.lat, p.lng], { icon: pinIcon(p.category) }).addTo(target).bindPopup(
+      `<a class="popup" href="${hrefOf(p)}"><b>${esc(p.name)}</b><br>${p.wish ? '가볼 곳' : p.rating ? `<span class="stars">${stars(p.rating)}</span>` : ''} ${esc(catOf(p.category).label)}</a>`);
   }
   if (pts.length === 1) map.setView(pts[0], 16);
   else if (pts.length > 1) map.fitBounds(pts, { padding: [40, 40], maxZoom: 16 });

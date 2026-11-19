@@ -1,5 +1,5 @@
 // 공유 링크: 맛집 정보(사진 제외)를 압축해서 URL 해시에 담습니다. 서버가 필요 없어요.
-const KEYS = { name: 'n', category: 'c', rating: 'r', memo: 'm', address: 'a', lat: 'y', lng: 'x', link: 'l', visitedAt: 'v', revisit: 'w' };
+const KEYS = { name: 'n', category: 'c', rating: 'r', memo: 'm', address: 'a', lat: 'y', lng: 'x', link: 'l', visitedAt: 'v', revisit: 'w', wish: 'h', approx: 'q' };
 
 function pack(p) {
   const o = {};

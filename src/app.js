@@ -5,6 +5,7 @@ import { formView } from './views/form.js';
 import { detailView } from './views/detail.js';
 import { sharedView, sharedItemView } from './views/shared.js';
 import { settingsView } from './views/settings.js';
+import { exploreView, exploreItemView } from './views/explore.js';
 
 const clean = (fn) => (el, params) => { el.classList.remove('no-pad'); return fn(el, params); };
 
@@ -16,6 +17,8 @@ route('/p/:id/edit', clean(formView), 'list');
 route('/s/:data', clean(sharedView), '');
 route('/s/:data/:i', clean(sharedItemView), '');
 route('/settings', clean(settingsView), 'settings');
+route('/explore', clean(exploreView), 'explore');
+route('/explore/:id', clean(exploreItemView), 'explore');
 
 // 설치 프롬프트 (Android/데스크톱 Chrome)
 let deferred = null;

@@ -11,7 +11,7 @@ export function placeInfo(p) {
   return `
     <h2 class="detail-title">${esc(p.name)}</h2>
     <div class="detail-meta">
-      <span class="stars big">${stars(p.rating)}</span>
+      ${p.wish ? '<span class="badge wish">가볼 곳</span>' : p.rating ? `<span class="stars big">${stars(p.rating)}</span>` : ''}
       <span class="tag">${c.emoji} ${esc(c.label)}</span>
       ${p.revisit ? '<span class="badge">또 갈래요</span>' : ''}
     </div>

@@ -140,3 +140,13 @@ select { width: auto; margin: 0; }
 .modal { width: 100%; max-width: 380px; background: var(--card); border-radius: 18px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,.3); }
 .modal p { margin: .4rem 0 .8rem; }
 .modal .btn.danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+.badge.wish { background: #e6f0ff; color: #2a5bd7; }
+.btn:disabled { opacity: .6; cursor: default; }
+.cards { grid-template-columns: minmax(0, 1fr); }
+.card { min-width: 0; }
+.filters .row { flex-wrap: wrap; }
+.filters .row select { flex: 1; min-width: 0; }
+.filters #count { flex-basis: 100%; font-size: .82rem; }
+.form-actions.sticky { justify-content: center; }
+.form-actions.sticky .btn { max-width: 420px; box-shadow: 0 4px 14px rgba(0,0,0,.18); }

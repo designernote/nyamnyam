@@ -34,7 +34,10 @@ export async function formView(el, { id } = {}) {
 
       <div class="row2">
         <label>방문일<input type="date" name="visitedAt" value="${esc(p.visitedAt)}"></label>
-        <label class="check"><input type="checkbox" name="revisit" ${p.revisit ? 'checked' : ''}> 또 갈래요</label>
+        <div>
+          <label class="check"><input type="checkbox" name="revisit" ${p.revisit ? 'checked' : ''}> 또 갈래요</label>
+          <label class="check"><input type="checkbox" name="wish" ${p.wish ? 'checked' : ''}> 아직 안 가봤어요</label>
+        </div>
       </div>
 
       <fieldset><legend>위치</legend>
@@ -149,6 +152,7 @@ export async function formView(el, { id } = {}) {
       rating,
       visitedAt: fd.get('visitedAt'),
       revisit: fd.get('revisit') === 'on',
+      wish: fd.get('wish') === 'on',
       address: fd.get('address').trim(),
       link: fd.get('link').trim(),
       memo: fd.get('memo').trim(),

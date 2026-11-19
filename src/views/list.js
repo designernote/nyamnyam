@@ -3,7 +3,7 @@ import { CATEGORIES, catOf } from '../constants.js';
 import { esc, stars, fmtDate, blobUrl, setActions, toast, ask } from '../util.js';
 import { shareLink } from '../share.js';
 
-const state = { q: '', cat: '', sort: 'recent', minRating: 0 };
+const state = { q: '', cat: '', sort: 'recent', minRating: 0, status: '' };
 
 export function placeCard(p, href) {
   const c = catOf(p.category);
@@ -14,7 +14,7 @@ export function placeCard(p, href) {
     <div class="thumb">${thumb}</div>
     <div class="card-body">
       <div class="card-title">${esc(p.name)} ${p.revisit ? '<span class="badge">또 갈래요</span>' : ''}</div>
-      <div class="card-meta"><span class="stars">${stars(p.rating)}</span> · ${esc(c.label)}${p.visitedAt ? ' · ' + fmtDate(p.visitedAt) : ''}</div>
+      <div class="card-meta">${p.wish ? '<span class="badge wish">가볼 곳</span>' : `<span class="stars">${stars(p.rating)}</span>`} · ${esc(c.label)}${p.visitedAt ? ' · ' + fmtDate(p.visitedAt) : ''}</div>
       ${p.address ? `<div class="card-sub">${esc(p.address)}</div>` : ''}
       ${p.memo ? `<div class="card-memo">${esc(p.memo)}</div>` : ''}
     </div>
@@ -25,7 +25,8 @@ function filtered(all) {
   const q = state.q.trim().toLowerCase();
   const out = all.filter((p) =>
     (!state.cat || p.category === state.cat) &&
-    (p.rating || 0) >= state.minRating &&
+    (!state.status || (state.status === 'wish') === !!p.wish) &&
+    (p.wish ? state.minRating === 0 : (p.rating || 0) >= state.minRating) &&
     (!q || [p.name, p.address, p.memo].some((v) => v?.toLowerCase().includes(q))));
   const by = {
     recent: (a, b) => (b.visitedAt || '').localeCompare(a.visitedAt || '') || b.updatedAt - a.updatedAt,
@@ -44,6 +45,7 @@ export async function listView(el) {
       <h2>아직 기록한 맛집이 없어요</h2>
       <p class="muted">다녀온 맛집을 기록하고<br>친구에게 링크로 공유해 보세요.</p>
       <a class="btn primary" href="#/new">첫 맛집 기록하기</a>
+      <p><a class="btn" href="#/explore">🔥 서울 유명 맛집 둘러보기</a></p>
     </div>`;
     return;
   }
@@ -63,6 +65,11 @@ export async function listView(el) {
           <option value="rating">평점순</option>
           <option value="name">이름순</option>
         </select>
+        <select id="status">
+          <option value="">전체</option>
+          <option value="visited">가본 곳</option>
+          <option value="wish">가볼 곳</option>
+        </select>
         <select id="min">
           <option value="0">평점 전체</option>
           <option value="3">★3 이상</option>
@@ -76,6 +83,7 @@ export async function listView(el) {
 
   el.querySelector('#sort').value = state.sort;
   el.querySelector('#min').value = String(state.minRating);
+  el.querySelector('#status').value = state.status;
 
   const draw = () => {
     const items = filtered(all);
@@ -88,6 +96,7 @@ export async function listView(el) {
 
   el.querySelector('#q').addEventListener('input', (e) => { state.q = e.target.value; draw(); });
   el.querySelector('#sort').addEventListener('change', (e) => { state.sort = e.target.value; draw(); });
+  el.querySelector('#status').addEventListener('change', (e) => { state.status = e.target.value; draw(); });
   el.querySelector('#min').addEventListener('change', (e) => { state.minRating = +e.target.value; draw(); });
   el.querySelector('#chips').addEventListener('click', (e) => {
     const b = e.target.closest('.chip');
